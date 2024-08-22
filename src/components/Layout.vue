@@ -21,6 +21,6 @@ import Header from "./Header.vue";
 }
 
 .slot-wrapper {
-  max-width: 1400px;
+  width: 1400px;
 }
 </style>

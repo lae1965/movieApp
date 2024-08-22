@@ -1,9 +1,12 @@
 <script setup lang="ts">
+import { ref } from "vue";
 import MovieCard from "../components/MovieCard.vue";
 import ArrowLeft from "../components/SVG/ArrowLeft.vue";
 import { useMovieListStore } from "../hooks/useMovieListStore";
+import { Movie } from "../utils/interfaces";
 
-const { movieList } = useMovieListStore();
+const { getMovieList } = useMovieListStore();
+const movieList = ref<Movie[]>(getMovieList());
 </script>
 
 <template>

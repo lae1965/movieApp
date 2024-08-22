@@ -1,13 +1,17 @@
 <script setup lang="ts">
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import MovieCard from "../components/MovieCard.vue";
 import Radio from "../components/Radio.vue";
 import { useMovieListStore } from "../hooks/useMovieListStore";
+import { Movie } from "../utils/interfaces";
 
-const { movieList, loadMovieList } = useMovieListStore();
+const { getMovieList, loadMovieList } = useMovieListStore();
+const movieList = ref<Movie[]>([]);
 
 onMounted(async () => {
-  loadMovieList();
+  await loadMovieList();
+  movieList.value = getMovieList();
+  console.log(movieList.value);
 });
 </script>
 

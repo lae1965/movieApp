@@ -1,10 +1,17 @@
 export interface Movie {
   id: number;
-  title: string | null;
-  yearGenres: string | null;
-  director: string | null;
-  actors: string | null;
-  description: string | null;
-  duration: string | null;
+  title: string;
+  yearGenres: string;
+  director: string;
+  actors: string;
+  description: string;
+  duration: string;
   posterUrl: string;
+}
+
+export interface IState {
+  movieList: Movie[];
+  isSortedByName: boolean;
+  isLoading: boolean;
+  error: string;
 }

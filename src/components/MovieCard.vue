@@ -2,7 +2,8 @@
 import { Movie as IMovie } from "../utils/interfaces";
 import Movie from "./SVG/Movie.vue";
 
-const movie = defineProps<IMovie>();
+const { movie } = defineProps<{ movie: IMovie }>();
+console.log(movie);
 </script>
 
 <template>
@@ -55,6 +56,7 @@ const movie = defineProps<IMovie>();
   padding: 32px 32px 32px 24px;
   text-align: left;
   position: relative;
+  width: 100%;
 }
 
 .link {
