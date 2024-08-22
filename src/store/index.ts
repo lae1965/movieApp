@@ -1,24 +1,28 @@
 import { createStore } from 'vuex';
-import { IState, Movie } from '../utils/interfaces';
+import { State, Movie } from '../utils/interfaces';
 
-export const store = createStore({
-  state: <IState>{
+export const store = createStore<State>({
+  state: <State>{
     movieList: <Movie[]>[],
+    singleMovie: <Movie>{},
     isSortedByName: false,
     isLoading: false,
     error: '',
   },
   mutations: {
-    setMovieList(state: IState, payload: Movie[]) {
+    setMovieList(state: State, payload: Movie[]) {
       state.movieList = payload;
     },
-    setIsSortedByName(state: IState, payload: boolean) {
+    setSingleMovie(state: State, payload: Movie) {
+      state.singleMovie = payload;
+    },
+    setIsSortedByName(state: State, payload: boolean) {
       state.isSortedByName = payload;
     },
-    setIsLoading(state: IState, payload: boolean) {
+    setIsLoading(state: State, payload: boolean) {
       state.isLoading = payload;
     },
-    setError(state: IState, payload: string) {
+    setError(state: State, payload: string) {
       state.error = payload;
     },
   },
@@ -29,12 +33,18 @@ export const store = createStore({
     ) {
       commit('setMovieList', payload);
     },
-    toggleIsBoolean({
+    updateSingleMovie(
+      { commit }: { commit: (name: string, payload: Movie) => void },
+      payload: Movie
+    ) {
+      commit('setSingleMovie', payload);
+    },
+    toggleIsSortedByName({
       commit,
       state,
     }: {
       commit: (name: string, payload: boolean) => void;
-      state: IState;
+      state: State;
     }) {
       commit('setIsSortedByName', !state.isSortedByName);
     },
@@ -52,9 +62,10 @@ export const store = createStore({
     },
   },
   getters: {
-    getMovieList: (state: IState) => state.movieList,
-    getIsSortedByName: (state: IState) => state.isSortedByName,
-    getIsLoading: (state: IState) => state.isLoading,
-    getError: (state: IState) => state.error,
+    getMovieList: (state: State) => state.movieList,
+    getSingleMovie: (state: State) => state.singleMovie,
+    getIsSortedByName: (state: State) => state.isSortedByName,
+    getIsLoading: (state: State) => state.isLoading,
+    getError: (state: State) => state.error,
   },
 });

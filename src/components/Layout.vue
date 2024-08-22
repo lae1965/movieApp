@@ -13,7 +13,7 @@ import Header from "./Header.vue";
 
 <style lang="scss">
 .container {
-  min-height: 100vh;
+  min-height: 100dvh;
   background-color: #363232;
   display: flex;
   flex-direction: column;
@@ -22,5 +22,8 @@ import Header from "./Header.vue";
 
 .slot-wrapper {
   width: 1400px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 </style>

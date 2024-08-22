@@ -9,8 +9,9 @@ export interface Movie {
   posterUrl: string;
 }
 
-export interface IState {
+export interface State {
   movieList: Movie[];
+  singleMovie: Movie;
   isSortedByName: boolean;
   isLoading: boolean;
   error: string;

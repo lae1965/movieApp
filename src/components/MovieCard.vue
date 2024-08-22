@@ -2,17 +2,16 @@
 import { Movie as IMovie } from "../utils/interfaces";
 import Movie from "./SVG/Movie.vue";
 
-const { movie } = defineProps<{ movie: IMovie }>();
-console.log(movie);
+const { movie, isSingle } = defineProps<{ movie: IMovie; isSingle: boolean }>();
 </script>
 
 <template>
-  <article class="card">
+  <article class="card" :data-translate="!isSingle">
     <aside class="poster-wrapper">
       <img :src="movie.posterUrl" alt="poster" class="poster" />
     </aside>
     <div class="content">
-      <RouterLink to="/single" class="link">
+      <RouterLink :to="`/single/${movie.id}`" class="link">
         <h1 class="title">{{ movie.title }}</h1>
       </RouterLink>
       <p class="properties" v-if="!!movie.yearGenres">{{ movie.yearGenres }}</p>
@@ -37,6 +36,13 @@ console.log(movie);
   min-height: 168px;
   background: #4d4747;
   display: flex;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+
+.card[data-translate="true"]:hover {
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.35);
+  transform: translateY(-8px);
 }
 
 .poster-wrapper {
