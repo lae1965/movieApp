@@ -16,3 +16,9 @@ export interface State {
   isLoading: boolean;
   error: string;
 }
+
+export enum SortStatus {
+  NO_SORTED,
+  SORTED_BY_NAME,
+  SORTED_BY_YEAR,
+}

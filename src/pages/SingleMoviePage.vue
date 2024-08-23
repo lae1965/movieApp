@@ -7,13 +7,7 @@ import { useMovieListStore } from "../hooks/useMovieListStore";
 import { Movie } from "../utils/interfaces";
 import { useRoute } from "vue-router";
 
-const {
-  loadSingleMovie,
-  getSingleMovie,
-  getMovieList,
-  isLoading,
-  isError,
-} = useMovieListStore();
+const { loadMovie, singleMovie, movieList, isLoading, isError } = useMovieListStore();
 const route = useRoute();
 const movieId = +route.params.id;
 
@@ -29,12 +23,11 @@ const movie = ref<Movie>({
 });
 
 onMounted(async () => {
-  const movieList = getMovieList();
-  const findMovie = movieList.find((item) => item.id === movieId);
+  const findMovie = movieList.value.find((item) => item.id === movieId);
   if (findMovie) movie.value = findMovie;
   else {
-    await loadSingleMovie(movieId);
-    movie.value = getSingleMovie();
+    await loadMovie(movieId);
+    movie.value = singleMovie.value;
   }
 });
 </script>

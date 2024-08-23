@@ -1,17 +1,14 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted } from "vue";
 import MovieCard from "../components/MovieCard.vue";
 import Radio from "../components/Radio.vue";
 import Preloader from "../components/SVG/Preloader.vue";
 import { useMovieListStore } from "../hooks/useMovieListStore";
-import { Movie } from "../utils/interfaces";
 
-const { getMovieList, loadMovieList, isLoading, isError } = useMovieListStore();
-const movieList = ref<Movie[]>([]);
+const { loadMovie, movieList, isLoading, isError } = useMovieListStore();
 
 onMounted(async () => {
-  await loadMovieList();
-  movieList.value = getMovieList();
+  await loadMovie();
 });
 </script>
 
@@ -29,12 +26,7 @@ onMounted(async () => {
       <p class="error-text">К сожалению, по вашему запросу ничего не найдено...</p>
     </div>
     <div class="list" v-else>
-      <MovieCard
-        v-for="movie in movieList"
-        :key="movie.id"
-        :movie="movie"
-        :is-single="false"
-      />
+      <MovieCard v-for="movie in movieList" :key="movie.id" :movie="movie" :is-single="false" />
     </div>
   </main>
 </template>
