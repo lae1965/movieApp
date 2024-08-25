@@ -1,15 +1,28 @@
 <script setup lang="ts">
-const { isChecked, text, id } = withDefaults(
-  defineProps<{ isChecked?: boolean; text: string; id: string }>(),
-  {
-    isChecked: false,
-    text: "",
-  }
-);
+const { isChecked, text, id } = defineProps<{
+  isChecked?: boolean;
+  text: string;
+  id: string;
+}>();
+
+const emit = defineEmits<{
+  (e: "clickEvent", id: number): void;
+}>();
+
+const handleClick = () => {
+  emit("clickEvent", +id.split("_")[1]);
+};
 </script>
 
 <template>
-  <input type="radio" :checked="isChecked" name="nav" :id="id" class="input" />
+  <input
+    type="checkbox"
+    :checked="isChecked"
+    name="nav"
+    :id="id"
+    class="input"
+    @click="handleClick"
+  />
   <label :for="id" class="label">{{ text }}</label>
 </template>
 
@@ -37,7 +50,7 @@ const { isChecked, text, id } = withDefaults(
   }
 }
 
-.input:checked+.label::before {
+.input:checked + .label::before {
   content: "";
   background-color: rgba(255, 82, 82, 0.98);
   background-image: url(../assets/images/select.svg);

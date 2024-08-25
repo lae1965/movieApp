@@ -2,7 +2,7 @@ import { useStore } from 'vuex';
 import { fetchMovieList, fetchSingleMovie } from '../api';
 import { prepareMovieList, prepareMovie } from '../utils/prepereData';
 import { computed, ComputedRef } from 'vue';
-import { Movie } from '../utils/interfaces';
+import { Movie, SortStatus } from '../utils/interfaces';
 import { AxiosError } from 'axios';
 
 export const useMovieListStore = () => {
@@ -30,13 +30,21 @@ export const useMovieListStore = () => {
     }
   };
 
+  const setSortStatus = (status: number) => {
+    store.dispatch('updateSortStatus', status as SortStatus);
+  };
+
   return {
     loadMovie,
     movieList: <ComputedRef<Movie[]>>computed(() => store.getters.getMovieList),
     singleMovie: <ComputedRef<Movie>>(
       computed(() => store.getters.getSingleMovie)
     ),
+    setSortStatus,
+    sortStatus: <ComputedRef<SortStatus>>(
+      computed(() => store.getters.getSortStatus)
+    ),
     isLoading: <ComputedRef<boolean>>computed(() => store.getters.getIsLoading),
-    isError: <ComputedRef<string>>computed(() => store.getters.getError),
+    isError: <ComputedRef<boolean>>computed(() => !!store.getters.getError),
   };
 };

@@ -1,14 +1,38 @@
 <script setup lang="ts">
-import { onMounted } from "vue";
+import { onMounted, ref, watchEffect } from "vue";
 import MovieCard from "../components/MovieCard.vue";
-import Radio from "../components/Radio.vue";
 import Preloader from "../components/SVG/Preloader.vue";
 import { useMovieListStore } from "../hooks/useMovieListStore";
+import Checkbox from "../components/Checkbox.vue";
+import { Movie, SortStatus } from "../utils/interfaces";
+import { sortMovieList } from "../utils/sortMovieList";
 
-const { loadMovie, movieList, isLoading, isError } = useMovieListStore();
+const {
+  loadMovie,
+  movieList,
+  setSortStatus,
+  sortStatus,
+  isLoading,
+  isError,
+} = useMovieListStore();
 
 onMounted(async () => {
   await loadMovie();
+});
+
+const isSortedByProp = (status: SortStatus) => (sortStatus.value & status) === status;
+
+const handleClick = (id: number) => {
+  let value: number;
+  if ((sortStatus.value | id) === 0b11) value = id;
+  else value = sortStatus.value ^ id;
+  setSortStatus(value);
+};
+
+const sotredList = ref<Movie[]>([]);
+
+watchEffect(() => {
+  sotredList.value = sortMovieList([...movieList.value], sortStatus.value);
 });
 </script>
 
@@ -16,8 +40,18 @@ onMounted(async () => {
   <main class="main">
     <h1 class="heading">Фильмы</h1>
     <nav class="nav">
-      <Radio :is-checked="true" id="radio1" text="Отсортировать по названию" />
-      <Radio id="radio2" text="Отсортировать по году" />
+      <Checkbox
+        :is-checked="isSortedByProp(SortStatus.SORTED_BY_NAME)"
+        id="checkbox_1"
+        text="Отсортировать по названию"
+        @click-event="handleClick"
+      />
+      <Checkbox
+        :is-checked="isSortedByProp(SortStatus.SORTED_BY_YEAR)"
+        id="checkbox_2"
+        text="Отсортировать по году"
+        @click-event="handleClick"
+      />
     </nav>
     <div class="list loader" v-if="isLoading">
       <Preloader />
@@ -26,7 +60,12 @@ onMounted(async () => {
       <p class="error-text">К сожалению, по вашему запросу ничего не найдено...</p>
     </div>
     <div class="list" v-else>
-      <MovieCard v-for="movie in movieList" :key="movie.id" :movie="movie" :is-single="false" />
+      <MovieCard
+        v-for="movie in sotredList"
+        :key="movie.id"
+        :movie="movie"
+        :is-single="false"
+      />
     </div>
   </main>
 </template>

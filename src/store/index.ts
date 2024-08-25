@@ -1,11 +1,11 @@
 import { createStore } from 'vuex';
-import { State, Movie } from '../utils/interfaces';
+import { State, Movie, SortStatus } from '../utils/interfaces';
 
 export const store = createStore<State>({
   state: <State>{
     movieList: <Movie[]>[],
     singleMovie: <Movie>{},
-    isSortedByName: false,
+    sortStatus: SortStatus.NO_SORTED,
     isLoading: false,
     error: '',
   },
@@ -16,8 +16,8 @@ export const store = createStore<State>({
     setSingleMovie(state: State, payload: Movie) {
       state.singleMovie = payload;
     },
-    setIsSortedByName(state: State, payload: boolean) {
-      state.isSortedByName = payload;
+    setSortStatus(state: State, payload: SortStatus) {
+      state.sortStatus = payload;
     },
     setIsLoading(state: State, payload: boolean) {
       state.isLoading = payload;
@@ -39,14 +39,11 @@ export const store = createStore<State>({
     ) {
       commit('setSingleMovie', payload);
     },
-    toggleIsSortedByName({
-      commit,
-      state,
-    }: {
-      commit: (name: string, payload: boolean) => void;
-      state: State;
-    }) {
-      commit('setIsSortedByName', !state.isSortedByName);
+    updateSortStatus(
+      { commit }: { commit: (name: string, payload: SortStatus) => void },
+      payload: SortStatus
+    ) {
+      commit('setSortStatus', payload);
     },
     updateIsLoading(
       { commit }: { commit: (name: string, payload: boolean) => void },
@@ -64,7 +61,7 @@ export const store = createStore<State>({
   getters: {
     getMovieList: (state: State) => state.movieList,
     getSingleMovie: (state: State) => state.singleMovie,
-    getIsSortedByName: (state: State) => state.isSortedByName,
+    getSortStatus: (state: State) => state.sortStatus,
     getIsLoading: (state: State) => state.isLoading,
     getError: (state: State) => state.error,
   },

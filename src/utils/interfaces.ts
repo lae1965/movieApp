@@ -1,3 +1,9 @@
+export enum SortStatus {
+  NO_SORTED = 0b00,
+  SORTED_BY_NAME = 0b01,
+  SORTED_BY_YEAR = 0b10,
+}
+
 export interface Movie {
   id: number;
   title: string;
@@ -12,13 +18,7 @@ export interface Movie {
 export interface State {
   movieList: Movie[];
   singleMovie: Movie;
-  isSortedByName: boolean;
+  sortStatus: SortStatus;
   isLoading: boolean;
   error: string;
-}
-
-export enum SortStatus {
-  NO_SORTED,
-  SORTED_BY_NAME,
-  SORTED_BY_YEAR,
 }
