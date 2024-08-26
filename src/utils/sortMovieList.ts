@@ -8,9 +8,10 @@ export const sortMovieList = (movieList: Movie[], sortStatus: SortStatus) => {
       return movieList.sort((a: Movie, b: Movie) => {
         const aFirstChar = a.title[0];
         const bFirstChar = b.title[0];
-        if (isEnglish(aFirstChar) && isEnglish(bFirstChar))
-          return a.title.localeCompare(b.title);
-        if (!isEnglish(aFirstChar) && !isEnglish(bFirstChar))
+        if (
+          (isEnglish(aFirstChar) && isEnglish(bFirstChar)) ||
+          (!isEnglish(aFirstChar) && !isEnglish(bFirstChar))
+        )
           return a.title.localeCompare(b.title);
         return isEnglish(aFirstChar) ? -1 : 1;
       });
