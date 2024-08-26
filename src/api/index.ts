@@ -13,7 +13,7 @@ export const fetchMovieList = async () => {
 
 export const fetchSingleMovie = async (id: number) => {
   try {
-    const response = await axios.get(`${SINGLE_MOVIE_URL}${id}`);
+    const response = await axios.get(`${SINGLE_MOVIE_URL}/${id}`);
 
     return response.data.data;
   } catch (e) {

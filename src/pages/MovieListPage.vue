@@ -40,18 +40,10 @@ watchEffect(() => {
   <main class="main">
     <h1 class="heading">Фильмы</h1>
     <nav class="nav">
-      <Checkbox
-        :is-checked="isSortedByProp(SortStatus.SORTED_BY_NAME)"
-        id="checkbox_1"
-        text="Отсортировать по названию"
-        @click-event="handleClick"
-      />
-      <Checkbox
-        :is-checked="isSortedByProp(SortStatus.SORTED_BY_YEAR)"
-        id="checkbox_2"
-        text="Отсортировать по году"
-        @click-event="handleClick"
-      />
+      <Checkbox :is-checked="isSortedByProp(SortStatus.SORTED_BY_NAME)" id="checkbox_1" text="Отсортировать по названию"
+        @click-event="handleClick" />
+      <Checkbox :is-checked="isSortedByProp(SortStatus.SORTED_BY_YEAR)" id="checkbox_2" text="Отсортировать по году"
+        @click-event="handleClick" />
     </nav>
     <div class="list loader" v-if="isLoading">
       <Preloader />
@@ -60,19 +52,14 @@ watchEffect(() => {
       <p class="error-text">К сожалению, по вашему запросу ничего не найдено...</p>
     </div>
     <div class="list" v-else>
-      <MovieCard
-        v-for="movie in sotredList"
-        :key="movie.id"
-        :movie="movie"
-        :is-single="false"
-      />
+      <MovieCard v-for="movie in sotredList" :key="movie.id" :movie="movie" :is-single="false" />
     </div>
   </main>
 </template>
 
 <style lang="scss" scoped>
 .main {
-  padding-block: 40px;
+  padding: 40px;
   width: 100%;
   display: flex;
   flex-direction: column;

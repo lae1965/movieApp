@@ -31,4 +31,8 @@ import Layout from "./components/Layout.vue";
   font-weight: 400;
   font-style: normal;
 }
+
+#app {
+  overflow-y: auto;
+}
 </style>

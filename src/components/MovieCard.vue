@@ -6,7 +6,7 @@ const { movie, isSingle } = defineProps<{ movie: IMovie; isSingle: boolean }>();
 </script>
 
 <template>
-  <article class="card" :data-translate="!isSingle">
+  <article class="card" :data-raised="!isSingle">
     <aside class="poster-wrapper">
       <img :src="movie.posterUrl" alt="poster" class="poster" />
     </aside>
@@ -40,7 +40,7 @@ const { movie, isSingle } = defineProps<{ movie: IMovie; isSingle: boolean }>();
   transition: transform 0.5s ease, box-shadow 0.5s ease;
 }
 
-.card[data-translate="true"]:hover {
+.card[data-raised="true"]:hover {
   box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.35);
   transform: translateY(-8px);
 }
